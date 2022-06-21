@@ -4,3 +4,4 @@ node_modules/
 build/
 /iconfont.json
 .DS_Store
+yarn.lock

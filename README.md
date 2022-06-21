@@ -47,7 +47,7 @@ npx iconfont-init
 ```json
 {
   "symbol_url": "请参考README.md，复制 http://iconfont.cn 官网提供的JS链接",
-  "local_svgs": "直接使用本地svg图标文件夹生成，不使用http://iconfont.cn CDN的方式",
+  "local_svgs": "请参考README.md，本地svg文件夹，使用本地svg图标时配置",
   "save_dir": "./src/components/iconfont",
   "use_typescript": false,
   "platforms": "*",
