@@ -1,9 +1,11 @@
 {
   "name": "taro-iconfont-cli",
-  "version": "3.3.0",
+  "version": "3.4.0",
   "main": "index.js",
-  "repository": "git@github.com:iconfont-cli/taro-iconfont-cli.git",
-  "author": "范文华 <531362022@qq.com>",
+  "repository": {
+    "type": "git",
+    "url": "git@192.168.100.180:resico-fed/taro-iconfont-cli.git"
+  },
   "license": "MIT",
   "bin": {
     "iconfont": "./commands/help.js",
@@ -12,6 +14,16 @@
   },
   "peerDependencies": {
     "@tarojs/taro": "^3.0.8"
+  },
+  "author": "jishuzhongxin@resico.cn",
+  "prettier": {
+    "singleQuote": true,
+    "semi": true,
+    "stylelintIntegration": true,
+    "eslintIntegration": true,
+    "trailingComma": "all",
+    "htmlWhitespaceSensitivity": "ignore",
+    "printWidth": 120
   },
   "dependencies": {
     "colors": "^1.4.0",

@@ -1,3 +1,6 @@
+# 3.4.0
+[feat] 支持本地svg图标 by leidenglai
+
 # 3.2.1
 [fix] ts项目导出IconNames可能报错的问题 #50
 
