@@ -14,7 +14,7 @@ export interface Config {
   design_width: string | number;
   trim_icon_prefix: string;
   default_icon_size: number;
-  local_svgs?: string;
+  local_svgs: string;
 }
 
 let cacheConfig: Config;

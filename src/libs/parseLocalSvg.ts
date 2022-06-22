@@ -1,9 +1,8 @@
 import glob from 'glob';
 import path from 'path';
-import { XmlData } from 'iconfont-parser';
-import { parseString } from 'xml2js';
 import { Config } from '../libs/getConfig';
 import * as fs from 'fs';
+import { optimize } from 'svgo';
 
 export interface ILocalSvg {
   svgStr: string;
@@ -11,66 +10,34 @@ export interface ILocalSvg {
   styleType: boolean;
 }
 
-const parseLocalSvg = async ({ local_svgs }: Config): Promise<XmlData> => {
+const parseLocalSvg = ({ local_svgs }: Config) => {
   if (!local_svgs) {
-    return {
-      svg: {
-        symbol: [],
-      },
-    };
+    return Promise.resolve([]);
   }
 
   const localDir = path.resolve(local_svgs);
   const localSvg = glob.sync(path.join(localDir, '**/*.svg'));
-  const symbolList = localSvg.map((currentValue) => {
+
+  const svgs = localSvg.reduce<ILocalSvg[]>((previousValue, currentValue) => {
     let svgStr = fs.readFileSync(currentValue, 'utf-8');
 
-    /**
-     * 去除注释,title,desc等不需要的标签
-     */
-    svgStr = svgStr
-      .substring(svgStr.indexOf('<svg '), svgStr.indexOf('</svg>') + 6)
-      .replace(/<!-(.*?)->/g, '')
-      .replace(/<title>(.*?)<\/title>/g, '')
-      .replace(/<desc>(.*?)<\/desc>/g, '');
+    // 添加svg压缩
+    const optimizeSVG = optimize(svgStr, {
+      // all config fields are also available here
+      // https://github.com/svg/svgo#built-in-plugins
+      multipass: true,
+    });
+
+    svgStr = optimizeSVG.data;
 
     const styleType = !!~svgStr.indexOf('</style>');
 
-    const source = {
-      svgStr,
-      name: path.basename(currentValue, '.svg'),
-      styleType,
-    };
+    previousValue.push({ svgStr, name: path.basename(currentValue, '.svg'), styleType });
 
-    return new Promise<XmlData['svg']['symbol'][number]>((resolve, reject) => {
-      parseString(source.svgStr, { rootName: 'svg' }, (err: Error, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          const {
-            $: { viewBox },
-            path,
-          } = result.svg;
+    return previousValue;
+  }, []);
 
-          resolve({
-            $: {
-              id: source.name,
-              viewBox,
-            },
-            path,
-          });
-        }
-      });
-    });
-  });
-
-  const data = await Promise.all(symbolList);
-
-  return {
-    svg: {
-      symbol: data,
-    },
-  };
+  return Promise.resolve(svgs);
 };
 
 export default parseLocalSvg;

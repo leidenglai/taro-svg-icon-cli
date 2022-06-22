@@ -6,12 +6,13 @@ import glob from 'glob';
 import colors from 'colors';
 import mkdirp from 'mkdirp';
 import { Config, getConfig } from '../libs/getConfig';
-import { fetchXml } from 'iconfont-parser';
+import { fetchXml, XmlData } from 'iconfont-parser';
 import { PLATFORM_MAP } from '../libs/maps';
 import { filterMiniProgramConfig, filterReactNativeConfig, filterReactWebConfig } from '../libs/filterConfig';
 import { generateUsingComponent } from '../libs/generateUsingComponent';
 import { getIconNames } from '../libs/getIconNames';
-import parseLocalSvg from '../libs/parseLocalSvg';
+import { getLocalIconNames } from '../libs/getLocalIconNames';
+import parseLocalSvg, { ILocalSvg } from '../libs/parseLocalSvg';
 
 const basePath = path.join(__dirname, '..');
 const miniProgramBasePath = 'node_modules/mini-program-iconfont-cli';
@@ -28,8 +29,10 @@ const reactWebDir = fs.existsSync(path.join(basePath, reactWebBasePath))
   : path.resolve(reactWebBasePath);
 
 const config = getConfig();
+// 是否本地图标模式
+const isLocal = !!config.local_svgs;
 
-function getXmlData(config: Config) {
+function getXmlData(config: Config): Promise<XmlData | ILocalSvg[]> {
   if (config.symbol_url) {
     return fetchXml(config.symbol_url);
   } else if (config.local_svgs) {
@@ -37,23 +40,6 @@ function getXmlData(config: Config) {
   }
 
   return Promise.reject();
-}
-
-export interface XmlData {
-  svg: {
-    symbol: Array<{
-      $: {
-        viewBox: string;
-        id: string;
-      };
-      path: Array<{
-        $: {
-          d: string;
-          fill?: string;
-        };
-      }>;
-    }>;
-  };
 }
 
 getXmlData(config)
@@ -73,7 +59,7 @@ getXmlData(config)
       }
     });
 
-    const iconNames = getIconNames(result, config);
+    const iconNames = isLocal ? getLocalIconNames(result, config) : getIconNames(result, config);
 
     generateUsingComponent(config, iconNames);
 
