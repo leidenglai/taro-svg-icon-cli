@@ -59,7 +59,9 @@ getXmlData(config)
       }
     });
 
-    const iconNames = isLocal ? getLocalIconNames(result, config) : getIconNames(result, config);
+    const iconNames = isLocal
+      ? getLocalIconNames(result as ILocalSvg[], config)
+      : getIconNames(result as XmlData, config);
 
     generateUsingComponent(config, iconNames);
 

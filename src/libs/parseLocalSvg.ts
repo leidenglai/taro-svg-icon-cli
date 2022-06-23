@@ -10,7 +10,7 @@ export interface ILocalSvg {
   styleType: boolean;
 }
 
-const parseLocalSvg = ({ local_svgs }: Config) => {
+const parseLocalSvg = async ({ local_svgs }: Config) => {
   if (!local_svgs) {
     return Promise.resolve([]);
   }
@@ -26,6 +26,17 @@ const parseLocalSvg = ({ local_svgs }: Config) => {
       // all config fields are also available here
       // https://github.com/svg/svgo#built-in-plugins
       multipass: true,
+      plugins: [
+        {
+          name: 'preset-default',
+          params: {
+            overrides: {
+              // 覆盖默认参数
+              removeViewBox: false,
+            },
+          },
+        },
+      ],
     });
 
     svgStr = optimizeSVG.data;
@@ -37,7 +48,7 @@ const parseLocalSvg = ({ local_svgs }: Config) => {
     return previousValue;
   }, []);
 
-  return Promise.resolve(svgs);
+  return svgs;
 };
 
 export default parseLocalSvg;
