@@ -36,6 +36,13 @@ const parseLocalSvg = async ({ local_svgs }: Config) => {
             },
           },
         },
+        'removeStyleElement',
+        {
+          name: 'removeAttrs',
+          params: {
+            attrs: 'class',
+          },
+        },
       ],
     });
 
