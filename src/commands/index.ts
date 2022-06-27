@@ -12,7 +12,7 @@ import { filterMiniProgramConfig, filterReactNativeConfig, filterReactWebConfig 
 import { generateUsingComponent } from '../libs/generateUsingComponent';
 import { getIconNames } from '../libs/getIconNames';
 import { getLocalIconNames } from '../libs/getLocalIconNames';
-import parseLocalSvg, { ILocalSvg } from '../libs/parseLocalSvg';
+import parseLocalSvg, { ILocalSvgs } from '../libs/parseLocalSvg';
 
 const basePath = path.join(__dirname, '..');
 const miniProgramBasePath = 'node_modules/mini-program-iconfont-cli';
@@ -32,7 +32,7 @@ const config = getConfig();
 // 是否本地图标模式
 const isLocal = !!config.local_svgs;
 
-function getXmlData(config: Config): Promise<XmlData | ILocalSvg[]> {
+function getXmlData(config: Config): Promise<XmlData | ILocalSvgs> {
   if (config.symbol_url) {
     return fetchXml(config.symbol_url);
   } else if (config.local_svgs) {
@@ -60,7 +60,7 @@ getXmlData(config)
     });
 
     const iconNames = isLocal
-      ? getLocalIconNames(result as ILocalSvg[], config)
+      ? getLocalIconNames(result as ILocalSvgs, config)
       : getIconNames(result as XmlData, config);
 
     generateUsingComponent(config, iconNames);

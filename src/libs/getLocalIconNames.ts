@@ -1,8 +1,8 @@
 import { XmlData } from 'iconfont-parser';
 import { Config } from './getConfig';
-import { ILocalSvg } from './parseLocalSvg';
+import { ILocalSvgs } from './parseLocalSvg';
 
-export const getLocalIconNames = (data: ILocalSvg[], config: Config) => {
+export const getLocalIconNames = (data: ILocalSvgs, config: Config) => {
   const names: string[] = [];
 
   data.forEach((item) => {
