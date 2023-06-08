@@ -1,0 +1,71 @@
+<template>
+  <!--${iconIdAfterTrim}-->
+  <span :style="`display: inline-block; background-image: url(${quot}data:image/svg+xml, #svgCode#${quot}); width: ${svgSize}px; height: ${svgSize}px;`" class="icon" />
+</template>
+
+<script>
+export default {
+  props: {
+    color: {
+      type: String,
+      default: '',
+    },
+    size:{
+      type: Number,
+      default: #size#,
+    },
+  },
+  data() {
+    return {
+      quot: '"',
+    };
+  },
+  computed: {
+    colors() {
+      return this.fixColor(this.color);
+    },
+    isStr() {
+      return typeof this.color === 'string';
+    },
+
+    svgSize() {
+      const size = this.size;
+
+      return #rpx-1:size / 750 * window.innerWidth:##rpx-0:size:#
+    }
+  },
+  methods: {
+    fixColor() {
+      var color = this.color;
+      var hex2rgb = this.hex2rgb;
+
+      if (typeof color === 'string') {
+        return color.indexOf('#') === 0 ? hex2rgb(color) : color;
+      }
+
+      return color.map(function (item) {
+        return item.indexOf('#') === 0 ? hex2rgb(item) : item;
+      });
+    },
+    hex2rgb(hex) {
+      var rgb = [];
+
+      hex = hex.substr(1);
+
+      if (hex.length === 3) {
+        hex = hex.replace(/(.)/g, '$1$1');
+      }
+
+      hex.replace(/../g, function (color) {
+        rgb.push(parseInt(color, 0x10));
+        return color;
+      });
+
+      return 'rgb(' + rgb.join(',') + ')';
+    },
+  },
+};
+</script>
+<style scoped>
+#css#
+</style>

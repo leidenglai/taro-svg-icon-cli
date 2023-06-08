@@ -1,0 +1,17 @@
+<template>
+  <component v-bind:is="icon" v-bind="$attrs"></component>
+</template>
+
+<script>
+#import#
+
+export default {
+  props: {
+    // icon名称： #names#
+    icon: String,
+  },
+  components: {
+    #comps#
+  },
+};
+</script>
