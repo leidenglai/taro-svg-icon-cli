@@ -36,7 +36,7 @@ export const generateAlipayComponent = (data: ILocalSvgs, config: Config) => {
       )}{{quot}});` + ' width: {{svgSize}}px; height: {{svgSize}}px; " class="icon" />',
     );
 
-    console.log(`${colors.green('√')} Generated icon "${colors.yellow(iconId)}"`);
+    console.log(`${colors.green('√')} 生成图标 "${colors.yellow(iconId)}"`);
   });
 
   fs.writeFileSync(path.join(saveDir, fileName + '.acss'), getTemplate('alipay.acss'));
@@ -51,5 +51,5 @@ export const generateAlipayComponent = (data: ILocalSvgs, config: Config) => {
   fs.writeFileSync(path.join(saveDir, fileName + '.js'), jsFile);
   fs.writeFileSync(path.join(saveDir, fileName + '.json'), getTemplate('alipay.json'));
 
-  console.log(`\n${colors.green('√')} All icons have been putted into dir: ${colors.green(config.save_dir)}\n`);
+  console.log(`\n${colors.green('√')} 所有图标已放入文件夹: ${colors.green(config.save_dir)}\n`);
 };

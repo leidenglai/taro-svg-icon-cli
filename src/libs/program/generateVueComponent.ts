@@ -52,7 +52,7 @@ export const generateVueComponent = (data: ILocalSvgs, config: Config) => {
 
     fs.writeFileSync(path.join(saveDir, comp.name + '.vue'), comp.js);
 
-    console.log(`${colors.green('√')} Generated icon "${colors.yellow(iconId)}"`);
+    console.log(`${colors.green('√')} 生成图标 "${colors.yellow(iconId)}"`);
   });
   const importStrs = names.map((name) => `import ${nameToHump(name)} from './${name}.vue;'`);
   const compsStrs = names.map((name) => `${nameToHump(name)}, `);
@@ -62,5 +62,5 @@ export const generateVueComponent = (data: ILocalSvgs, config: Config) => {
 
   fs.writeFileSync(path.join(saveDir, 'index.vue'), enptyStr);
 
-  console.log(`\n${colors.green('√')} All icons have been putted into dir: ${colors.green(config.save_dir)}\n`);
+  console.log(`\n${colors.green('√')} 所有图标已放入文件夹: ${colors.green(config.save_dir)}\n`);
 };
