@@ -88,8 +88,6 @@ npx iconfont-init
 ```bash
 npx iconfont-taro
 
-# 可传入配置文件路径
-# npx iconfont-taro --config iconfont.json
 ```
 生成后查看您设置的保存目录中是否含有所有的图标
 
@@ -98,23 +96,22 @@ npx iconfont-taro
 在生成代码之前，你可以顺便参考snapshots目录自动生成的快照文件。
 
 # Step 4
-由于Taro3.0的架构变更，您需要在`src/app.config.js`下填写一次`usingComponents`。
+需要在`src/app.config.js`下填写`usingComponents`。
 ```typescript
 // src/app.config.js
-import { useGlobalIconFont } from './components/iconfont/helper';
-
+// 如果是钉钉小程序，由于他的限制，需要在每个page的config添加usingComponents
 export default {
-  usingComponents: Object.assign(useGlobalIconFont()),
+  usingComponents: {
+    iconfont: '@/components/iconfont/weapp/weapp',
+  },
 }
 ```
-
-这并不是一个多好的方案，毕竟还需要开发者关注这个细节。也许能用webpack的plugin解决或者等官方推出更好的方案，有任何更好的idea欢迎提供。
 
 # 使用
 在Page中使用图标
 ```jsx harmony
 import React, { Component } from 'react';
-import IconFont from '../components/iconfont';
+import IconFont from 'yourpath_xx/components/iconfont';
 
 class App extends Component {
   render() {

@@ -7,12 +7,37 @@ import React, { FunctionComponent } from 'react';
 export type IconNames = '#names#';
 
 interface Props {
+  /** 图标名称 */
   name: IconNames;
+  /** 图标大小 */
   size?: number;
+  /** 图标颜色 当原SVG图为单色时可修改颜色 */
   color?: string | string[];
   style?: React.CSSProperties;
 }
 
+/**
+ * SVG生成图标
+ * @example_react
+ * ```tsx
+ * export default class PageView extends Component {
+ *   constructor() {
+ *     super(...arguments)
+ *   }
+ *
+ *   render() {
+ *     return (
+ *       <View className='components-page'>
+ *         <IconFont name='close' />
+ *         <IconFont name='close' size='14' />
+ *         <IconFont name='close' size='14' color="#fff" />
+ *       </View>
+ *     )
+ *   }
+ * }
+ * ```
+ * @see https://github.com/leidenglai/taro-icon-cli#readme
+ */
 const IconFont: FunctionComponent<Props> = (props) => {
   const { name, size, color, style } = props;
 

@@ -3,6 +3,28 @@
 import React from 'react';
 #rpx-1:import Taro from '@tarojs/taro';:#
 
+/**
+ * SVG生成图标
+ * @example_react
+ * ```tsx
+ * export default class PageView extends Component {
+ *   constructor() {
+ *     super(...arguments)
+ *   }
+ *
+ *   render() {
+ *     return (
+ *       <View className='components-page'>
+ *         <IconFont name='close' />
+ *         <IconFont name='close' size='14' />
+ *         <IconFont name='close' size='14' color="#fff" />
+ *       </View>
+ *     )
+ *   }
+ * }
+ * ```
+ * @see https://github.com/leidenglai/taro-icon-cli#readme
+ */
 const IconFont = (props) => {
   const { name, size, color, style } = props;
 
