@@ -32,6 +32,7 @@
   },
   "exclude": [
     "./snapshots/",
-    "./build/"
+    "./build/",
+    "./src/components/"
   ]
 }

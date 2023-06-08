@@ -11,14 +11,14 @@ cp README.md package.json LICENSE CHANGELOG.md ./build
 cp -rf src/templates ./build/templates
 
 old_registry=$(npm config get registry)
-npm config set registry http://nexus3.ustax.tech/repository/npm-hosted/
+npm config set registry https://registry.npmjs.org/
 set +e
 whoami=$(npm whoami 2>/dev/null)
 set -e
 
 if [ -z "$whoami" ]
 then
-   echo "login nexus3..."
+   echo "login npm..."
    npm login
 fi
 echo "I am: $(npm whoami)"
