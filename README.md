@@ -147,3 +147,5 @@ npx iconfont-taro
 ```
 
 --------
+
+## 感谢[taro-iconfont-cli](https://github.com/iconfont-cli/taro-iconfont-cli) 提供灵感和部分代码
