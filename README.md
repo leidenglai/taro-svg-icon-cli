@@ -1,5 +1,5 @@
-# taro-iconfont-cli
-在Taro框架中使用iconfont图标，不依赖字体，支持多色彩。
+# taro-svg-icon-cli
+在Taro框架中使用svg图片生成图标组件，不依赖字体，支持多色彩和大小。
 
 # 支持平台
 
@@ -20,10 +20,10 @@
 
 ```bash
 # Yarn
-yarn add taro-iconfont-cli --dev
+yarn add taro-svg-icon-cli --dev
 
 # Npm
-npm install taro-iconfont-cli --save-dev
+npm install taro-svg-icon-cli --save-dev
 ```
 
 
