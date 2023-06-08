@@ -5,15 +5,28 @@ import minimist from 'minimist';
 import defaultConfig from './iconfont.json';
 import { PLATFORM_MAP } from './maps';
 
+export enum PLATFORM {
+  WEAPP = 'weapp',
+  H5 = 'h5',
+  ALIPAY = 'alipay',
+}
+
 export interface Config {
-  symbol_url: string;
+  /** 保存地址 */
   save_dir: string;
-  use_typescript: boolean;
-  platforms: string[];
+  /** 是否使用typescript */
+  use_typescript?: boolean;
+  /** 编译平台 */
+  platforms: PLATFORM[];
+  /** 是否使用rpx */
   use_rpx: boolean;
-  design_width: string | number;
+  /** 设计稿宽度 */
+  design_width?: string | number;
+  /** 图标前缀 */
   trim_icon_prefix: string;
+  /** 默认图标font-size */
   default_icon_size: number;
+  /** 本地保存svg图地址 */
   local_svgs: string;
 }
 
@@ -34,26 +47,22 @@ export const getConfig = (argv?: string[]) => {
   const targetFile = path.resolve(configFilePath);
 
   if (!fs.existsSync(targetFile)) {
-    console.warn(colors.red(`File "${configFilePath}" doesn't exist, did you forget to generate it?`));
+    console.warn(colors.red(`配置文件 "${configFilePath}" 不存在, 你是不是忘记生成了？`));
     process.exit(1);
   }
 
   const config = require(targetFile) as Config;
 
-  if ((!config.symbol_url || !/^(https?:)?\/\//.test(config.symbol_url)) && !config.local_svgs) {
-    console.warn(colors.red('You are required to provide symbol_url or local_svgs'));
+  if (!config.local_svgs) {
+    console.warn(colors.red('你需要提供 "local_svgs" 配置'));
     process.exit(1);
-  }
-
-  if (config.symbol_url.indexOf('//') === 0) {
-    config.symbol_url = 'http:' + config.symbol_url;
   }
 
   if (Array.isArray(config.platforms)) {
     config.platforms = [...new Set(config.platforms)];
   } else {
     if (config.platforms === '*') {
-      config.platforms = Object.keys(PLATFORM_MAP);
+      config.platforms = Object.keys(PLATFORM_MAP) as PLATFORM[];
     } else {
       config.platforms = [];
     }

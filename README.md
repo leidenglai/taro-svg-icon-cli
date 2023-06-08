@@ -5,26 +5,18 @@
 
 * 微信小程序
 * 支付宝小程序
-* 百度小程序
-* 头条小程序
-* QQ小程序
-* H5
 
 # 特性
 1、一键生成标准组件，多端支持
 <br>
 2、使用方便，import即可
 <br>
-3、支持多色彩
+3、支持自定义颜色和大小
 <br>
-4、支持自定义颜色
-<br>
-5、支持es6和typescript两种模式
+4、支持es6和typescript两种模式
 
 # Step 1
 安装插件
-
-**如果您使用Taro2.x，请安装 `taro-iconfont-cli@2.1.0`，并阅读旧版的[README.md](https://github.com/iconfont-cli/taro-iconfont-cli/blob/v2.1.0/README.md)**
 
 ```bash
 # Yarn
@@ -46,7 +38,6 @@ npx iconfont-init
 此时项目根目录会生成一个`iconfont.json`的文件，内容如下：
 ```json
 {
-  "symbol_url": "请参考README.md，复制 http://iconfont.cn 官网提供的JS链接",
   "local_svgs": "请参考README.md，本地svg文件夹，使用本地svg图标时配置",
   "save_dir": "./src/components/iconfont",
   "use_typescript": false,
@@ -58,18 +49,11 @@ npx iconfont-init
 }
 ```
 ### 配置参数说明：
-### symbol_url
-请直接复制[iconfont](http://iconfont.cn)官网提供的项目链接。请务必看清是`.js`后缀而不是.css后缀。如果你现在还没有创建iconfont的仓库，那么可以填入这个链接去测试：`http://at.alicdn.com/t/font_1373348_kk9y3jk2omq.js`
-
-<br />
-
-![](https://github.com/fwh1990/mini-program-iconfont-cli/blob/master/images/symbol-url.png?raw=true)
-
 ### local_svgs
-直接使用本地svg图标文件夹生成，不使用 iconfont。symbol_url不用配置
+本地svg图标文件夹。
 
 ### save_dir
-根据iconfont图标生成的组件存放的位置。每次生成组件之前，该文件夹都会被清空。
+生成的图标组件存放的位置。每次生成组件之前，该文件夹都会被清空。
 
 ### use_typescript
 如果您的项目使用Typescript编写，请设置为true。这个选项将决定生成的图标组件是`.tsx`还是`.js`后缀。
@@ -81,8 +65,8 @@ npx iconfont-init
 ```json5
 {
   // 选择你需要的平台
-  // 说明 =>  weapp: 微信  |  swan: 百度  |  alipay: 支付宝  |  tt: 字节跳动
-  "platforms": ["weapp", "swan", "alipay", "h5", "tt", "qq"]
+  // 说明 =>  weapp: 微信   |  alipay: 支付宝和钉钉
+  "platforms": ["weapp", "alipay", ]
 }
 ```
 
@@ -111,7 +95,7 @@ npx iconfont-taro
 
 -------
 
-在生成代码之前，你可以顺便参考[snapshots目录](https://github.com/iconfont-cli/taro-iconfont-cli/tree/master/snapshots)自动生成的快照文件。
+在生成代码之前，你可以顺便参考snapshots目录自动生成的快照文件。
 
 # Step 4
 由于Taro3.0的架构变更，您需要在`src/app.config.js`下填写一次`usingComponents`。
@@ -148,12 +132,8 @@ export default App;
 // 单色：红色
 <IconFont name="alipay" color="red" />
 
-// 多色：红色+橘色
-<IconFont name="alipay" color={['red', 'orange']} size={300} />
-
-// 不同格式的颜色写法
-<IconFont name="alipay" color={['#333', 'rgb(50, 124, 39)']} />
-
+// 大小
+<IconFont name="alipay" size="16" />
 
 // 与文字对齐
 <View style={{ display: 'flex', alignItems: 'center' }}>
@@ -163,12 +143,10 @@ export default App;
 ```
 
 # 更新图标
-当您在iconfont.cn中的图标有变更时，只需更改配置`symbol_url`，然后再次执行`Step 3`即可生成最新的图标组件
+将svg图片添加到文件夹，再次执行生成命令
 ```bash
-# 修改 symbol_url 配置后执行：
+
 npx iconfont-taro
 ```
 
 --------
-
-欢迎使用，并给我一些反馈和建议，让这个库做的更好

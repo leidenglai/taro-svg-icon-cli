@@ -6,40 +6,32 @@ import glob from 'glob';
 import colors from 'colors';
 import mkdirp from 'mkdirp';
 import { Config, getConfig } from '../libs/getConfig';
-import { fetchXml, XmlData } from 'iconfont-parser';
 import { PLATFORM_MAP } from '../libs/maps';
-import { filterMiniProgramConfig, filterReactNativeConfig, filterReactWebConfig } from '../libs/filterConfig';
+import { filterMiniProgramConfig } from '../libs/filterConfig';
 import { generateUsingComponent } from '../libs/generateUsingComponent';
-import { getIconNames } from '../libs/getIconNames';
 import { getLocalIconNames } from '../libs/getLocalIconNames';
 import parseLocalSvg, { ILocalSvgs } from '../libs/parseLocalSvg';
-
-const basePath = path.join(__dirname, '..');
-const miniProgramBasePath = 'node_modules/mini-program-iconfont-cli';
-const reactNativeBasePath = 'node_modules/react-native-iconfont-cli';
-const reactWebBasePath = 'node_modules/react-iconfont-cli';
-const miniProgramDir = fs.existsSync(path.join(basePath, miniProgramBasePath))
-  ? path.join(basePath, miniProgramBasePath)
-  : path.resolve(miniProgramBasePath);
-const reactNativeDir = fs.existsSync(path.join(basePath, reactNativeBasePath))
-  ? path.join(basePath, reactNativeBasePath)
-  : path.resolve(reactNativeBasePath);
-const reactWebDir = fs.existsSync(path.join(basePath, reactWebBasePath))
-  ? path.join(basePath, reactWebBasePath)
-  : path.resolve(reactWebBasePath);
+import { generateAlipayComponent } from '../libs/program/generateAlipayComponent';
+import { generateWechatComponent } from '../libs/program/generateWechatComponent';
 
 const config = getConfig();
-// 是否本地图标模式
-const isLocal = !!config.local_svgs;
 
-function getXmlData(config: Config): Promise<XmlData | ILocalSvgs> {
-  if (config.symbol_url) {
-    return fetchXml(config.symbol_url);
-  } else if (config.local_svgs) {
-    return parseLocalSvg(config);
-  }
+function getXmlData(config: Config): Promise<ILocalSvgs> {
+  return parseLocalSvg(config);
+}
 
-  return Promise.reject();
+/**
+ * 清空文件夹
+ */
+function unlinkFile(dir: string) {
+  glob.sync(path.resolve(dir, '*')).forEach((dirOrFile) => {
+    if (fs.statSync(dirOrFile).isDirectory()) {
+      unlinkFile(dirOrFile);
+      fs.rmdirSync(dirOrFile);
+    } else {
+      fs.unlinkSync(dirOrFile);
+    }
+  });
 }
 
 getXmlData(config)
@@ -50,55 +42,26 @@ getXmlData(config)
     }
 
     mkdirp.sync(config.save_dir);
-    glob.sync(path.resolve(config.save_dir, '*')).forEach((dirOrFile) => {
-      if (fs.statSync(dirOrFile).isDirectory()) {
-        glob.sync(path.resolve(dirOrFile, '*')).forEach((file) => fs.unlinkSync(file));
-        fs.rmdirSync(dirOrFile);
-      } else {
-        fs.unlinkSync(dirOrFile);
-      }
-    });
+    unlinkFile(config.save_dir);
 
-    const iconNames = isLocal
-      ? getLocalIconNames(result as ILocalSvgs, config)
-      : getIconNames(result as XmlData, config);
+    const iconNames = getLocalIconNames(result, config);
 
-    generateUsingComponent(config, iconNames);
+    // generateUsingComponent(config, iconNames);
 
     config.platforms.forEach((platform) => {
-      let execFile = PLATFORM_MAP[platform] as string;
-
-      if (!execFile) {
-        console.warn(`\nThe platform ${colors.red(platform)} is not exist.\n`);
+      let iconfontLib = PLATFORM_MAP[platform];
+      if (!iconfontLib) {
+        console.warn(`\n不存在处理 ${colors.red(platform)} 端的lib.\n`);
         return;
       }
-
-      execFile = path.join(...execFile.split('/'));
-
-      console.log(`\nCreating icons for platform ${colors.green(platform)}\n`);
-
+      console.log(`\n开始创建 ${colors.green(platform)} 端图标\n`);
+      let execFile = path.join(...iconfontLib.split('/'));
       const execMethod = path.basename(execFile);
 
-      if (execFile.indexOf('mini-program-iconfont-cli') >= 0) {
-        execFile = execFile.replace(/mini-program-iconfont-cli/, miniProgramDir);
-        require(execFile)[execMethod](result, filterMiniProgramConfig(config, platform));
-      } else if (execFile.indexOf('react-native-iconfont-cli') >= 0) {
-        const localSvg = [];
-        execFile = execFile.replace(/react-native-iconfont-cli/, reactNativeDir);
-        require(execFile)[execMethod](result, localSvg, filterReactNativeConfig(config, platform));
-
-        // Remove .d.ts files
-        glob.sync(path.resolve(config.save_dir, platform, '*.d.ts')).map((rnFilePath) => {
-          fs.unlinkSync(rnFilePath);
-        });
-      } else {
-        execFile = execFile.replace(/react-iconfont-cli/, reactWebDir);
-        require(execFile)[execMethod](result, filterReactWebConfig(config, platform));
-
-        // Remove .d.ts files
-        glob.sync(path.resolve(config.save_dir, platform, '*.d.ts')).map((h5FilePath) => {
-          fs.unlinkSync(h5FilePath);
-        });
+      if (platform === 'alipay') {
+        generateAlipayComponent(result, filterMiniProgramConfig(config, platform));
+      } else if (platform === 'weapp') {
+        generateWechatComponent(result, filterMiniProgramConfig(config, platform));
       }
 
       generateUsingComponent(config, iconNames, platform);

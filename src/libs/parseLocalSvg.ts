@@ -1,28 +1,32 @@
 import glob from 'glob';
 import path from 'path';
-import { Config } from '../libs/getConfig';
 import * as fs from 'fs';
 import { optimize } from 'svgo';
+import { Config } from '../libs/getConfig';
 
 export type ILocalSvgs = {
+  /** xml字符串 */
   svgStr: string;
+  /** 文件名 */
   name: string;
+  /** xml包含style */
   styleType: boolean;
 }[];
 
-const parseLocalSvg = async ({ local_svgs }: Config) => {
+/**
+ * 解析本地svg资源
+ * 并且将svg xml精简压缩
+ * @returns
+ */
+export default async function parseLocalSvg({ local_svgs }: Config) {
   if (!local_svgs) {
     return Promise.resolve([]);
   }
-
   const localDir = path.resolve(local_svgs);
-  const localSvg = glob.sync(path.join(localDir, '**/*.svg'));
-
-  const svgs = localSvg.reduce<ILocalSvgs>((previousValue, currentValue) => {
-    let svgStr = fs.readFileSync(currentValue, 'utf-8');
-
+  const localSvgPaths = glob.sync(path.join(localDir, '**/*.svg'));
+  const svgs = localSvgPaths.reduce<ILocalSvgs>((svgSources, svgPath) => {
     // 添加svg压缩
-    const optimizeSVG = optimize(svgStr, {
+    const optimizeSVG = optimize(fs.readFileSync(svgPath, 'utf-8'), {
       // all config fields are also available here
       // https://github.com/svg/svgo#built-in-plugins
       multipass: true,
@@ -45,17 +49,13 @@ const parseLocalSvg = async ({ local_svgs }: Config) => {
         },
       ],
     });
+    const svgXml = optimizeSVG.data;
+    const styleType = !!~svgXml.indexOf('</style>');
 
-    svgStr = optimizeSVG.data;
+    svgSources.push({ svgStr: svgXml, name: path.basename(svgPath, '.svg'), styleType });
 
-    const styleType = !!~svgStr.indexOf('</style>');
-
-    previousValue.push({ svgStr, name: path.basename(currentValue, '.svg'), styleType });
-
-    return previousValue;
+    return svgSources;
   }, []);
 
   return svgs;
-};
-
-export default parseLocalSvg;
+}

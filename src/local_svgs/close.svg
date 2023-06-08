@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63 (92445) - https://sketch.com -->
+    <title>叉掉</title>
+    <desc>Created with Sketch.</desc>
+    <g id="员工版切图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图3" transform="translate(-1893.000000, -102.000000)" fill="#C5CAD5">
+            <path d="M1908,97 C1908.55228,97 1909,97.4477153 1909,98 L1909,116 L1927,116 C1927.55228,116 1928,116.447715 1928,117 C1928,117.552285 1927.55228,118 1927,118 L1909,118 L1909,136 C1909,136.552285 1908.55228,137 1908,137 C1907.44772,137 1907,136.552285 1907,136 L1907,117.999 L1889,118 C1888.44772,118 1888,117.552285 1888,117 C1888,116.447715 1888.44772,116 1889,116 L1907,115.999 L1907,98 C1907,97.4477153 1907.44772,97 1908,97 Z" id="叉掉" transform="translate(1908.000000, 117.000000) rotate(-315.000000) translate(-1908.000000, -117.000000) "></path>
+        </g>
+    </g>
+</svg>
