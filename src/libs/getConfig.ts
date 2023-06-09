@@ -22,7 +22,7 @@ export interface Config {
   use_rpx: boolean;
   /** 设计稿宽度 */
   design_width?: string | number;
-  /** 图标前缀 */
+  /** 需删除的图标前缀 */
   trim_icon_prefix: string;
   /** 默认图标font-size */
   default_icon_size: number;
