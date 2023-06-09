@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import { Config } from './getConfig';
+import { Config, PLATFORM } from './getConfig';
 import { getTemplate } from './getTemplate';
 import {
   replaceIsRpx,
@@ -30,7 +30,7 @@ export const generateUsingComponent = (config: Config, names: string[], platform
   iconFile = replaceNames(iconFile, names);
   iconFile = replaceSize(iconFile, config.default_icon_size);
 
-  if(platform === 'h5' && config.use_rpx) {
+  if(platform === PLATFORM.H5 && config.use_rpx) {
     let designWidth = config.design_width || 750
     iconFile = replaceDesignWidth(iconFile, designWidth);
   }

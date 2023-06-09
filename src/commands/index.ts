@@ -5,7 +5,7 @@ import path from 'path';
 import glob from 'glob';
 import colors from 'colors';
 import mkdirp from 'mkdirp';
-import { Config, getConfig } from '../libs/getConfig';
+import { Config, PLATFORM, getConfig } from '../libs/getConfig';
 import { PLATFORM_MAP } from '../libs/maps';
 import { filterMiniProgramConfig } from '../libs/filterConfig';
 import { generateUsingComponent } from '../libs/generateUsingComponent';
@@ -58,9 +58,9 @@ getXmlData(config)
       let execFile = path.join(...iconfontLib.split('/'));
       const execMethod = path.basename(execFile);
 
-      if (platform === 'alipay') {
+      if (platform === PLATFORM.ALIPAY) {
         generateAlipayComponent(result, filterMiniProgramConfig(config, platform));
-      } else if (platform === 'weapp') {
+      } else if (platform === PLATFORM.WEAPP) {
         generateWechatComponent(result, filterMiniProgramConfig(config, platform));
       }
 
