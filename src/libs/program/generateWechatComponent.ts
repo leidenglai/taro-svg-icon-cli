@@ -1,13 +1,14 @@
 import fs from 'fs';
 import path, { basename } from 'path';
-import mkdirp from 'mkdirp';
-import glob from 'glob';
+import * as mkdirp from 'mkdirp';
+import * as glob from 'glob';
 import colors from 'colors';
 import { generateLocalCase } from './utils';
 import { replaceIsRpx, replaceNames, replaceSize } from './utils/replace';
 import { Config } from '../getConfig';
 import { getTemplate } from '../getTemplate';
 import { ILocalSvgs } from '../parseLocalSvg';
+import { replaceDesignWidth } from '../replace';
 
 export const generateWechatComponent = (data: ILocalSvgs, config: Config) => {
   const svgTemplates: string[] = [];
@@ -45,6 +46,7 @@ export const generateWechatComponent = (data: ILocalSvgs, config: Config) => {
   let jsFile = getTemplate('wechat.js');
 
   jsFile = replaceSize(jsFile, config.default_icon_size);
+  jsFile = replaceDesignWidth(jsFile, config.design_width || 750);
   jsFile = replaceNames(jsFile, names);
   jsFile = replaceIsRpx(jsFile, config.use_rpx);
 

@@ -1,4 +1,4 @@
-# taro-svg-icon-cli
+# taro-svg-generator
 在Taro框架中使用svg图片生成图标组件，不依赖字体，支持多色彩和大小。
 
 # 支持平台
@@ -19,21 +19,24 @@
 安装插件
 
 ```bash
-# Yarn
-yarn add taro-svg-icon-cli --dev
+# yarn
+yarn add taro-svg-generator --dev
 
-# Npm
-npm install taro-svg-icon-cli --save-dev
+# npm
+npm install taro-svg-generator --save-dev
+
+# pnpm
+pnpm add -D taro-svg-generator
 ```
 
 
 # Step 2
 生成配置文件
 ```bash
-npx iconfont-init
+npx taro-svg-generator-init
 
 # 可传入配置输出路径
-# npx iconfont-init --output iconfont.json
+# npx taro-svg-generator-init --output iconfont.json
 ```
 此时项目根目录会生成一个`iconfont.json`的文件，内容如下：
 ```json
@@ -72,6 +75,9 @@ npx iconfont-init
 ### use_rpx
 是否使用[尺寸单位rpx](https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxss.html#%E5%B0%BA%E5%AF%B8%E5%8D%95%E4%BD%8D)还是普通的像素单位`px`。默认值为true，与Taro保持一致的缩放。您也可以设置为false，强制使用`px`
 
+### design_width
+可以通过修改这个字段来修改设计尺寸。
+
 ### trim_icon_prefix
 如果你的图标有通用的前缀，而你在使用的时候又不想重复去写，那么可以通过这种配置这个选项把前缀统一去掉。
 
@@ -82,7 +88,7 @@ npx iconfont-init
 # Step 3
 开始生成Taro标准组件
 ```bash
-npx iconfont-taro
+npx taro-svg-generator-sync 
 
 ```
 生成后查看您设置的保存目录中是否含有所有的图标
@@ -139,9 +145,10 @@ export default App;
 将svg图片添加到文件夹，再次执行生成命令
 ```bash
 
-npx iconfont-taro
+npx taro-svg-generator-sync
 ```
 
 --------
 
 ## 感谢[taro-iconfont-cli](https://github.com/iconfont-cli/taro-iconfont-cli) 提供灵感和部分代码
+## 感谢[taro-svg-generator](https://github.com/leidenglai/taro-svg-generator) 提供灵感和部分代码

@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path, { basename } from 'path';
-import mkdirp from 'mkdirp';
-import glob from 'glob';
+import * as mkdirp from 'mkdirp';
+import * as glob from 'glob';
 import colors from 'colors';
 import { generateLocalCase } from './utils';
 import { replaceIsRpx, replaceNames, replaceSize } from './utils/replace';
