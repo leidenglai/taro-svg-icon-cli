@@ -1,6 +1,6 @@
 {
   "name": "taro-svg-generator",
-  "version": "1.0.4-beta5",
+  "version": "1.0.4-beta6",
   "main": "index.js",
   "repository": {
     "type": "git",
@@ -8,9 +8,9 @@
   },
   "license": "MIT",
   "bin": {
-    "iconfont": "./commands/help.js",
-    "iconfont-init": "./commands/createJson.js",
-    "iconfont-taro": "./commands/index.js"
+    "taro-svg-generator": "./commands/help.js",
+    "taro-svg-generator-init": "./commands/createJson.js",
+    "taro-svg-generator-sync": "./commands/index.js"
   },
   "peerDependencies": {
     "@tarojs/taro": "^3.0.8"
