@@ -1,4 +1,4 @@
-const designWidth = #designWidth#
+const designWidth = #designWidth#;
 Component({
   properties: {
     // #names#
