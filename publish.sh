@@ -25,6 +25,6 @@ echo "I am: $(npm whoami)"
 
 sleep 1
 echo "Begin publish..."
-# npm publish ./build/ --access=public "$@"
+npm publish ./build/ --access=public "$@"
 
 npm config set registry ${old_registry}

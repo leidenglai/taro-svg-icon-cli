@@ -9,6 +9,7 @@ export const filterMiniProgramConfig = (config: Config, platform: string) => {
     use_rpx: config.use_rpx,
     trim_icon_prefix: config.trim_icon_prefix,
     default_icon_size: config.default_icon_size,
+    design_width: config.design_width
   };
 };
 
