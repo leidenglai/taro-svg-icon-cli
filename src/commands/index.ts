@@ -2,9 +2,9 @@
 
 import fs from 'fs';
 import path from 'path';
-import glob from 'glob';
+import * as glob from 'glob';
 import colors from 'colors';
-import mkdirp from 'mkdirp';
+import * as mkdirp from 'mkdirp';
 import { Config, PLATFORM, getConfig } from '../libs/getConfig';
 import { PLATFORM_MAP } from '../libs/maps';
 import { filterMiniProgramConfig } from '../libs/filterConfig';

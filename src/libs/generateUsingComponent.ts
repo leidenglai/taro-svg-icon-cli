@@ -30,10 +30,8 @@ export const generateUsingComponent = (config: Config, names: string[], platform
   iconFile = replaceNames(iconFile, names);
   iconFile = replaceSize(iconFile, config.default_icon_size);
 
-  if(platform === PLATFORM.H5 && config.use_rpx) {
-    let designWidth = config.design_width || 750
-    iconFile = replaceDesignWidth(iconFile, designWidth);
-  }
+  let designWidth = config.design_width || 750;
+  iconFile = replaceDesignWidth(iconFile, designWidth);
 
   iconFile = replaceIsRpx(iconFile, config.use_rpx);
 

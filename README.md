@@ -1,4 +1,4 @@
-# taro-svg-icon-cli
+# taro-svg-generator
 在Taro框架中使用svg图片生成图标组件，不依赖字体，支持多色彩和大小。
 
 # 支持平台
@@ -71,6 +71,9 @@ npx iconfont-init
 
 ### use_rpx
 是否使用[尺寸单位rpx](https://developers.weixin.qq.com/miniprogram/dev/framework/view/wxss.html#%E5%B0%BA%E5%AF%B8%E5%8D%95%E4%BD%8D)还是普通的像素单位`px`。默认值为true，与Taro保持一致的缩放。您也可以设置为false，强制使用`px`
+
+### design_width
+可以通过修改这个字段来修改设计尺寸。
 
 ### trim_icon_prefix
 如果你的图标有通用的前缀，而你在使用的时候又不想重复去写，那么可以通过这种配置这个选项把前缀统一去掉。
@@ -145,3 +148,4 @@ npx iconfont-taro
 --------
 
 ## 感谢[taro-iconfont-cli](https://github.com/iconfont-cli/taro-iconfont-cli) 提供灵感和部分代码
+## 感谢[taro-svg-icon-cli](https://github.com/leidenglai/taro-svg-icon-cli) 提供灵感和部分代码

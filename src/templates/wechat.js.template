@@ -1,3 +1,4 @@
+const designWidth = #designWidth#
 Component({
   properties: {
     // #names#
@@ -20,14 +21,14 @@ Component({
       value: #size#,
       observer: function(size) {
         this.setData({
-          svgSize: #rpx-1:size / 750 * wx.getSystemInfoSync().windowWidth:##rpx-0:size:#,
+          svgSize: #rpx-1:size / designWidth * wx.getSystemInfoSync().windowWidth:##rpx-0:size:#,
         });
       },
     },
   },
   data: {
     colors: '',
-    svgSize: #rpx-1:#size# / 750 * wx.getSystemInfoSync().windowWidth:##rpx-0:#size#:#,
+    svgSize: #rpx-1:#size# / designWidth * wx.getSystemInfoSync().windowWidth:##rpx-0:#size#:#,
     quot: '"',
     isStr: true,
   },
