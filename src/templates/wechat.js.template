@@ -3,6 +3,7 @@ Component({
     // #names#
     name: {
       type: String,
+      value: ''
     },
     // string | string[]
     color: {
