@@ -3,7 +3,7 @@ set -e
 rm -rf ./build
 rm -rf ./src/iconfont
 
-./node_modules/.bin/tsc
+tsc
 
 mv ./build/src/* ./build
 rm -rf ./build/src ./build/snapshots

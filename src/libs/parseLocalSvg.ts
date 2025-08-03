@@ -1,4 +1,4 @@
-import glob from 'glob';
+import * as glob from 'glob';
 import path from 'path';
 import * as fs from 'fs';
 import { optimize } from 'svgo';
@@ -23,7 +23,7 @@ export default async function parseLocalSvg({ local_svgs }: Config) {
     return Promise.resolve([]);
   }
   const localDir = path.resolve(local_svgs);
-  const localSvgPaths = glob.sync(path.join(localDir, '**/*.svg'));
+  const localSvgPaths = glob.sync(path.join(localDir, '**/*.svg'), { windowsPathsNoEscape: true });
   const svgs = localSvgPaths.reduce<ILocalSvgs>((svgSources, svgPath) => {
     // 添加svg压缩
     const optimizeSVG = optimize(fs.readFileSync(svgPath, 'utf-8'), {
